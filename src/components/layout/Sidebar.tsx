@@ -1,23 +1,8 @@
 import { useState, useCallback } from 'react'
 import { NavLink } from 'react-router-dom'
-import {
-  MdOutlineHome,
-  MdOutlineFlag,
-  MdOutlineCreditCard,
-  MdOutlineReceiptLong,
-  MdOutlinePerson,
-  MdOutlineChevronLeft,
-  MdOutlineChevronRight,
-} from 'react-icons/md'
+import { MdOutlineChevronLeft, MdOutlineChevronRight } from 'react-icons/md'
 import { ROUTE_LIST } from '@/constants'
-
-const icons: Record<string, React.ReactNode> = {
-  Home: <MdOutlineHome className="size-6 shrink-0" aria-hidden />,
-  Objetivos: <MdOutlineFlag className="size-6 shrink-0" aria-hidden />,
-  Cartões: <MdOutlineCreditCard className="size-6 shrink-0" aria-hidden />,
-  Transações: <MdOutlineReceiptLong className="size-6 shrink-0" aria-hidden />,
-  Perfil: <MdOutlinePerson className="size-6 shrink-0" aria-hidden />,
-}
+import { navIcons } from './navIcons'
 
 interface SidebarProps {
   isExpanded: boolean
@@ -63,7 +48,7 @@ export function Sidebar({ isExpanded, onToggle }: SidebarProps) {
               Mycash+
             </span>
           ) : (
-            <div className="flex flex-col items-center gap-0">
+            <div className="flex flex-col items-start gap-0">
               <span
                 className="font-bold text-text-primary"
                 style={{ fontSize: 'var(--font-size-base)' }}
@@ -71,7 +56,7 @@ export function Sidebar({ isExpanded, onToggle }: SidebarProps) {
                 My
               </span>
               <span
-                className="text-text-primary"
+                className="text-text-secondary"
                 style={{ fontSize: 'var(--font-size-xs)' }}
               >
                 cash+
@@ -96,23 +81,24 @@ export function Sidebar({ isExpanded, onToggle }: SidebarProps) {
           {ROUTE_LIST.map(({ path, label }) => (
             <div
               key={path}
-              className="relative"
+              className={`relative flex ${isExpanded ? 'justify-start' : 'justify-center'}`}
               onMouseEnter={() => handleNavMouseEnter(label)}
               onMouseLeave={handleNavMouseLeave}
             >
               <NavLink
                 to={path}
-                className={({ isActive: active }) =>
-                  `flex items-center gap-spacing-md overflow-hidden rounded-full px-spacing-md py-spacing-md transition-colors duration-sidebar ${
-                    active
-                      ? 'bg-primary text-text-on-primary [&_svg]:text-text-on-primary'
-                      : 'text-text-primary hover:bg-gray-100'
-                  }`
-                }
-                style={{ minHeight: '44px' }}
+                className={({ isActive: active }) => {
+                  const activeStyles = 'bg-primary text-text-on-primary [&_svg]:text-text-on-primary'
+                  const inactiveStyles = 'text-text-primary hover:bg-gray-100'
+                  if (isExpanded) {
+                    return `flex items-center gap-spacing-md overflow-hidden rounded-full px-spacing-md py-spacing-md transition-colors duration-sidebar ${active ? activeStyles : inactiveStyles}`
+                  }
+                  return `flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full transition-colors duration-sidebar ${active ? activeStyles : inactiveStyles}`
+                }}
+                style={isExpanded ? { minHeight: '44px' } : undefined}
               >
-                <span className="shrink-0">
-                  {icons[label] ?? icons.Home}
+                <span className="shrink-0 [&_svg]:size-6">
+                  {navIcons[label] ?? navIcons.Home}
                 </span>
                 {isExpanded && (
                   <span

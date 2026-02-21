@@ -9,7 +9,7 @@
 - [x] PROMPT 0: Análise e Planejamento Inicial
 - [x] PROMPT 1: Estrutura Base e Configuração
 - [x] PROMPT 2: Sistema de Layout e Navegação Desktop
-- [ ] PROMPT 3: Sistema de Layout e Navegação Mobile
+- [x] PROMPT 3: Sistema de Layout e Navegação Mobile
 - [ ] PROMPT 4: Context Global e Gerenciamento de Estado
 - [ ] PROMPT 5: Cards de Resumo Financeiro
 - [ ] PROMPT 6: Header do Dashboard com Controles
@@ -227,6 +227,38 @@ Tentativas: 1 | Erros: 0
 - src/components/layout/index.ts (export Sidebar)
 - src/layouts/MainLayout.tsx (estado sidebar, data-sidebar, main com margin-left animado)
 - src/styles/tokens.css (--sidebar-width, media query data-sidebar)
+
+---
+
+## PROMPT 3: Sistema de Layout e Navegação Mobile
+
+**Status:** ✅ Concluído  
+**Data:** 21/02/2025  
+**Build:** ✅
+
+### Implementado
+
+- **HeaderMobile** (`src/components/layout/HeaderMobile.tsx`): substitui a Sidebar em viewports &lt;1280px (lg). Fixo no topo, largura total, visível no scroll. Logo "Mycash+" à esquerda (tamanho mobile), avatar à direita como trigger do menu.
+- **MenuDropdown** (`src/components/layout/MenuDropdown.tsx`): abre ao tocar no avatar. Desliza de cima para baixo com animação suave; não ocupa tela inteira (max-height 70vh, scroll interno). Lista de navegação com ícone + texto (ROUTE_LIST); item da seção atual com fundo preto (`bg-button-primary`). Botão vermelho "Sair" no rodapé (`bg-danger`). Fecha ao clicar em item de navegação, no botão X (canto superior direito) ou no overlay escuro semi-transparente.
+- **Breakpoints:** Desktop (≥1280px): apenas Sidebar (`hidden lg:block` / `lg:hidden`). Mobile/Tablet (&lt;1280px): apenas HeaderMobile. Nunca os dois simultaneamente. Uso do breakpoint oficial lg (1280px) conforme project rules.
+- **MainLayout:** renderiza HeaderMobile em `lg:hidden` e Sidebar em `hidden lg:block`; main com `pt-[var(--header-mobile-height)]` quando header mobile visível e `lg:pt-0` no desktop.
+- **Tokens:** `--header-mobile-height` (56px), `--dropdown-transition-duration` (250ms); cores e tipografia via semânticos (--button-bg-primary, --button-primary-text, --color-danger, --surface-sidebar, --text-primary, --spacing-*).
+- **navIcons** compartilhado (`navIcons.tsx`) entre Sidebar e MenuDropdown (Material Design Outlined).
+
+### Tokens utilizados
+
+**Semânticas:** --header-mobile-height, --dropdown-transition-duration, --color-danger, --button-bg-primary, --button-text-primary, --color-text-primary, --color-surface-sidebar, --spacing-*.  
+**Primitivas:** --gray-100, --gray-300.
+
+### Arquivos criados/modificados
+
+- src/components/layout/HeaderMobile.tsx (criado)
+- src/components/layout/MenuDropdown.tsx (criado)
+- src/components/layout/navIcons.tsx (criado, ícones compartilhados)
+- src/components/layout/Sidebar.tsx (passa a usar navIcons)
+- src/components/layout/index.ts (export HeaderMobile, MenuDropdown)
+- src/layouts/MainLayout.tsx (HeaderMobile lg:hidden, main pt header-mobile)
+- src/styles/tokens.css (--header-mobile-height, --dropdown-transition-duration)
 
 ---
 

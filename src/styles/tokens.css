@@ -84,6 +84,10 @@
   --sidebar-width-collapsed: 80px;
   --sidebar-transition-duration: 250ms;
 
+  /* ========== HEADER MOBILE ========== */
+  --header-mobile-height: 56px;
+  --dropdown-transition-duration: 250ms;
+
   /* ========== SHAPE ========== */
   --border-radius-sm: 6px;
   --border-radius-md: 8px;
