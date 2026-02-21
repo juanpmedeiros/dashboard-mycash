@@ -8,7 +8,7 @@
 
 - [x] PROMPT 0: Análise e Planejamento Inicial
 - [x] PROMPT 1: Estrutura Base e Configuração
-- [ ] PROMPT 2: Sistema de Layout e Navegação Desktop
+- [x] PROMPT 2: Sistema de Layout e Navegação Desktop
 - [ ] PROMPT 3: Sistema de Layout e Navegação Mobile
 - [ ] PROMPT 4: Context Global e Gerenciamento de Estado
 - [ ] PROMPT 5: Cards de Resumo Financeiro
@@ -197,6 +197,36 @@ Ordem obrigatória no código: **1º Semântica → 2º Primitiva → 3º Conver
 ### Build
 
 Tentativas: 1 | Erros: 0
+
+---
+
+## PROMPT 2: Sistema de Layout e Navegação Desktop
+
+**Status:** ✅ Concluído  
+**Data:** 21/02/2025  
+**Build:** ✅
+
+### Implementado
+
+- **Sidebar** (`src/components/layout/Sidebar.tsx`): altura total do viewport (fixed left), dois estados — expandido (logo "mycash+", nomes das seções, perfil completo) e colapsado (ícone "m", apenas ícones, avatar).
+- Botão circular na borda direita da sidebar para alternar estados; ícone seta esquerda (expandida) / seta direita (colapsada).
+- Transições suaves (width e margin-left) com `duration-sidebar` (250ms); conteúdo principal com `margin-left: var(--sidebar-width)` animado.
+- Tooltip ao passar o mouse nos itens quando colapsada: aparece à direita do item com delay 400ms, nome da seção.
+- Item ativo: fundo preto (`--button-bg-primary`), texto branco (`--button-text-primary`), ícone verde-limão (`--color-primary`); inativos: fundo transparente, texto cinza (`--color-text-secondary`).
+- **MainLayout** (`src/layouts/MainLayout.tsx`): estado `isSidebarExpanded`; Sidebar renderizada apenas em `lg:` (≥1280px); `data-sidebar="expanded"|"collapsed"` no wrapper para `--sidebar-width` via CSS (0 em &lt;1280px, 256px/80px em desktop).
+- Tokens em `tokens.css`: `--sidebar-width`, `--sidebar-width-expanded`, `--sidebar-width-collapsed`, `--sidebar-transition-duration`; media query 1280px para aplicar largura atual.
+
+### Tokens utilizados
+
+**Semânticas:** --color-primary, --color-text-primary, --color-text-secondary, --button-bg-primary, --button-text-primary, --spacing-md, --font-size-*.  
+**Primitivas:** --gray-100, --gray-300 (avatar placeholder).
+
+### Arquivos criados/modificados
+
+- src/components/layout/Sidebar.tsx (criado)
+- src/components/layout/index.ts (export Sidebar)
+- src/layouts/MainLayout.tsx (estado sidebar, data-sidebar, main com margin-left animado)
+- src/styles/tokens.css (--sidebar-width, media query data-sidebar)
 
 ---
 
