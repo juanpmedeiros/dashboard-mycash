@@ -1,4 +1,4 @@
-# mycash+ - Gestão Financeira Familiar
+# Plataforma mycash+ - Gestão Financeira Familiar
 
 Sistema de gestão financeira familiar desenvolvido com React, TypeScript, Vite e Tailwind CSS.
 
